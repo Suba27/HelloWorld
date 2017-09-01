@@ -1,0 +1,15 @@
+contacts.view:
+    path: /admin/config/system/contacts
+    defaults: 
+        _controller: Drupal\hello_world\Controller\HelloWorldController::viewcontacts
+    requirements:
+        _permission: 'administer site configuration'
+        
+contact_form:
+    path: /contactform
+    defaults: 
+        _title: 'Contact Form'
+        _form: Drupal\hello_world\Form\ContactForm
+    requirements:
+        _permission: 'access content'
+        

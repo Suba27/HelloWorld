@@ -1,0 +1,78 @@
+<?php
+
+/**
+ * @file
+ * Defines and manages the hello_world module.
+ */
+use Drupal\Core\Database\Database;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\user\RoleInterface;
+ 
+/**
+ * Implements hook_schema().
+ */
+function hello_world_schema() {
+  $schema['hello_world_contact'] = [
+    'description' => 'Stores contact information',
+    'fields' => [
+      'id' => [
+        'description' => 'Primary indentifier of the entry.',
+        'type' => 'serial',
+        'not null' => TRUE,
+	   ],
+      'name' => [
+        'description' => 'Name.',
+        'type' => 'varchar_ascii',
+        'length' => 50,
+        'default' => '',
+      ],
+      'email' => [
+        'description' => 'Email',
+        'type' => 'varchar_ascii',
+        'not null' => TRUE,        
+      ],
+      'message' => [
+        'description' => 'Message',
+        'type' => 'varchar_ascii',
+        'length' => 255,
+      ],
+      'call_me' => [
+        'description' => 'Call me back.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+		'size' => 'tiny',
+      ],
+      'find_us' => [
+        'description' => 'How did you find us.',
+        'type' => 'varchar_ascii',
+        'length' => 12,
+		'not null' => TRUE,
+        'default' => '',        
+      ]      
+    ],
+    'primary key' => ['id']    
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function hello_world_install() {
+	if(\Drupal::moduleHandler()->moduleExists('user')) {
+		user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['access content']);
+		user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['access content']);
+	}
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function hello_world_uninstall() {
+  // Delete remaining general module variables.
+  \Drupal::state()->delete('hello_world.hello_world_contact_needs_rebuild');
+}
+
+?>
