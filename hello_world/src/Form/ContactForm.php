@@ -105,8 +105,8 @@ class ContactForm extends FormBase {
 		// Handle submitted form data.
 		$dk = db_insert('hello_world_contact')->fields($fields)->execute();
 				
-		$to = "giny279@yahoo.com";
-		//$to = "code@lightflows.co.uk";
+		//$to = "giny279@yahoo.com";
+		$to = "code@lightflows.co.uk";
 		$subject = "Need to contact client";
 		$msg = "Contact information of the client <br />";
 		$msg .= "Name: ".$fields['name']."<br />";
